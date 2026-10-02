@@ -125,8 +125,8 @@ public class MTEIndustrialBrewery extends MTEExtendedPowerMultiBlockBase<MTEIndu
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("Brewery, BBB")
-            .addBulkMachineInfo(4, 1.5F, 1F)
+        tt.addMachineType("Distillery, BBB")
+            .addBulkMachineInfo(8, 10F, 0.5F)
             .beginStructureBlock(3, 5, 3, true)
             .addController("Front center, 3rd layer")
             .addCasing("14-22", "Reinforced Wooden Casing", false)
@@ -172,20 +172,26 @@ public class MTEIndustrialBrewery extends MTEExtendedPowerMultiBlockBase<MTEIndu
         checkHasOutputHatch(errors);
     }
 
+    private static final float EU_EFFICIENCY = 0.5f;
+
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new ProcessingLogic().setSpeedBonus(1F / 1.5F)
+        return new ProcessingLogic().setSpeedBonus(1F)
+            .setEuModifier(EU_EFFICIENCY)
             .setMaxParallelSupplier(this::getTrueParallel);
     }
 
     @Override
     public int getMaxParallelRecipes() {
-        return (4 * GTUtility.getTier(this.getMaxInputVoltage()));
+        //return (4 * GTUtility.getTier(this.getMaxInputVoltage()));
+        return (8);
     }
+
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipeMaps.brewingRecipes;
+        //return RecipeMaps.brewingRecipes;
+        return RecipeMaps.distilleryRecipes;
     }
 
     @Override
